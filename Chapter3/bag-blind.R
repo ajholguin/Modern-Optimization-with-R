@@ -13,7 +13,7 @@ ibag <- function(D) {
   # set search space for one bag:
   search <- matrix(ncol = 5, nrow = 1000)
   search[] <- 1; search[, D] <- x 
-  S1 <- fsearch(search, profit, "max") 
+  S1 <- fsearch(search, profit, "max")        # full blind search
   S1$sol[D]     # best price
 }
 
