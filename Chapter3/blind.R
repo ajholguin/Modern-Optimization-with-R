@@ -5,10 +5,14 @@
 #    FUN - evaluation function
 #    type - "min" or "max"
 #    ... - extra parameters for FUN
-fsearch <- function(search, FUN, type="min", ...) {
-  x <- apply(search, 1, FUN, ...) # run FUN over all search rows
+fsearch <- function(search, FUN, type = "min", ...) {
+  x <- apply(search, 1, FUN, ...)   # run FUN over all search rows
   ib <- switch(type, min = which.min(x), max = which.max(x))
-  return(list(index = ib, sol = search[ib, ], eval = x[ib]))
+  return(
+    list(index = ib,          # index of solution
+         sol = search[ib, ],  # value of solution (in search space)
+         eval = x[ib]         # value of evaluation function at solution
+    ))
 }
 
 # depth-first full search method
@@ -37,7 +41,7 @@ dfsearch <- function(l = 1, b = 1, domain, FUN, type = "min", D = length(domain)
     else
       return(list(sol = x, eval = f))
   } else {
-     # go through sub branches
+    # go through sub branches
     for (j in 1:length(domain[[l]])) {
       x[l] <- domain[[l]][j]
       bcur <- dfsearch(l + 1, j, domain, FUN, type, D = D, x = x, bcur = bcur, ...)
